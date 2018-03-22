@@ -6,35 +6,64 @@ and open the template in the editor.
 -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets">
-    <h:head>
-        <title>JSF Main Page</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    </h:head>
-    <h:body>
-        <div id="container">
-            <div id="header">
-                <ui:insert name="header">
-                    <ui:include src="header.xhtml" />
-                </ui:insert>
-            </div>
-            <div id="menu">
-                <ui:insert name="menu">
-                    <ui:include src="menu.xhtml" />
-                </ui:insert>
-            </div>
-            <div id="body">
-                <ui:insert name="body">
-                    <ui:include src="main.xhtml" />
-                </ui:insert>
-            </div>
-            <div id="footer">
-                <ui:insert name="footer">
-                    <ui:include src="footer.xhtml" />
-                </ui:insert>
-            </div>
-        </div>
-    </h:body>
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+	<title>JSF Main Page</title>
+	<meta charset="utf-8" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+	<meta name="description" content="" />
+	<meta name="author" content="" />
+	<h:outputStylesheet library="webjars"
+		name="bootstrap/4.0.0-2/css/bootstrap-reboot.min-jsf.css" />
+	<h:outputStylesheet library="webjars"
+		name="bootstrap/4.0.0-2/css/bootstrap.min-jsf.css" />
+	<h:outputStylesheet name="/css/offcanvas.css" />
+	<h:outputScript library="webjars" name="jquery/3.3.1-1/jquery.js" />
+	<h:outputScript library="webjars"
+		name="popper.js/1.12.9-1/umd/popper.min.js" />
+	<h:outputScript library="webjars"
+		name="bootstrap/4.0.0-2/js/bootstrap.min.js" />
+	<h:outputScript name="/js/holder.min.js" />
+</h:head>
+<h:body styleClass="bg-light">
+	<div id="header">
+		<ui:insert name="header">
+			<ui:include src="header.xhtml" />
+		</ui:insert>
+	</div>
+
+
+	<div role="main" class="container">
+		<div
+			class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded box-shadow">
+			<img class="mr-3"
+				src="https://getbootstrap.com/assets/brand/bootstrap-outline.svg"
+				alt="" width="48" height="48" />
+			<div class="lh-100">
+				<h6 class="mb-0 text-white lh-100">Bootstrap</h6>
+				<small>Since 2011</small>
+			</div>
+		</div>
+		<div id="menu">
+			<ui:insert name="menu">
+				<ui:include src="menu.xhtml" />
+			</ui:insert>
+		</div>
+		<div id="body">
+			<ui:insert name="body">
+				<ui:include src="main.xhtml" />
+			</ui:insert>
+		</div>		
+	</div>
+
+	<div id="footer">
+		<ui:insert name="footer">
+			<ui:include src="footer.xhtml" />
+		</ui:insert>
+	</div>
+</h:body>
 </html>
