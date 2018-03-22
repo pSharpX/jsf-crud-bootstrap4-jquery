@@ -6,81 +6,128 @@ and open the template in the editor.
 -->
 <!DOCTYPE html>
 <f:view xmlns="http://www.w3.org/1999/xhtml"
-        xmlns:h="http://java.sun.com/jsf/html"
-        xmlns:f="http://java.sun.com/jsf/core"
-        locale="#{facesContext.externalContext.requestLocale}"
-        xmlns:ui="http://java.sun.com/jsf/facelets">
-    <ui:composition template="/shared/layout.xhtml">
-        <ui:define name="body">
-            <h:form>
-                <h:panelGrid bodyrows="11" columns="2">
-                    <h:outputLabel value="Nombre:" />
-                    <h:panelGroup>                    
-                        <h:inputText value="#{clienteBean.cliente.nombre}" required="true" id="nombre" label="Nombre" />
-                        <h:message for="nombre" />
-                    </h:panelGroup>                
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	locale="#{facesContext.externalContext.requestLocale}"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<ui:composition template="/shared/layout.xhtml">
+		<ui:define name="body">
+			<div class="my-3 p-3 bg-white rounded box-shadow">
+				<h6 class="border-bottom border-gray pb-2 mb-0">
+					<h:outputFormat value="#{msjs.enlace_nuevo}">
+						<f:param value="#{msjs.modulo_cliente}" />
+					</h:outputFormat>
+				</h6>
+				<div class="pt-3">
+					<h:form>
+						<div class="form-group">
+							<h:outputLabel value="Nombre:" for="nombre" />
+							<h:inputText value="#{clienteBean.cliente.nombre}"
+								styleClass="form-control" required="true" id="nombre"
+								label="Nombre" pt:placeholder="Enter Nombre"
+								pt:aria-describedby="nombreHelp" />
+							<small id="nombreHelp" class="form-text text-muted">We'll
+								never share your email with anyone else.</small>
+							<h:message for="nombre" />
+						</div>
 
-                    <h:outputLabel value="Apellido:" />
+						<div class="form-group">
+							<h:outputLabel value="Apellido:" for="apellido" />
+							<h:inputText value="#{clienteBean.cliente.apellido}"
+								styleClass="form-control" required="true" id="apellido"
+								label="Apellido" pt:placeholder="Enter Apellido"
+								pt:aria-describedby="apellidoHelp">
+								<f:validateLength maximum="20" />
+							</h:inputText>
+							<small id="apellidoHelp" class="form-text text-muted">We'll
+								never share your email with anyone else.</small>
+							<h:message for="apellido" />
+						</div>
 
-                    <h:panelGroup>
-                        <h:inputText value="#{clienteBean.cliente.apellido}" required="true" id="apellido" label="Apellido">
-                            <f:validateLength  maximum="20" />
-                        </h:inputText>
-                        <h:message for="apellido" />
-                    </h:panelGroup>                             
+						<div class="form-group">
+							<h:outputLabel value="Genero:" for="genero" />
+							<h:selectOneRadio id="genero"
+								value="#{clienteBean.cliente.genero}">
+								<f:selectItems value="#{listados.generos}" />
+							</h:selectOneRadio>
+						</div>
 
-                    <h:outputLabel value="Genero:" />
-                    <h:selectOneRadio value="#{clienteBean.cliente.genero}">
-                        <f:selectItems value="#{listados.generos}" />
-                    </h:selectOneRadio>
+						<div class="form-group">
+							<h:outputLabel value="Profesion:" for="profesion" />
+							<h:selectOneListbox id="profesion"
+								value="#{clienteBean.cliente.profesion}" size="1"
+								onchange="submit()" styleClass="custom-select"
+								valueChangeListener="#{clienteBean.mensajeProfesion}">
+								<f:selectItems value="#{listados.profesiones}" />
+							</h:selectOneListbox>
+							<h:outputText value="#{clienteBean.mensaje}" />
+						</div>
 
-                    <h:outputLabel value="Profesion:" />
-                    <h:panelGroup>
-                        <h:selectOneListbox value="#{clienteBean.cliente.profesion}" size="1" 
-                                            onchange="submit()"
-                                            valueChangeListener="#{clienteBean.mensajeProfesion}">
-                            <f:selectItems value="#{listados.profesiones}" />
-                        </h:selectOneListbox>
-                        <h:outputText value="#{clienteBean.mensaje}" />
-                    </h:panelGroup>
+						<div class="form-group">
+							<h:outputLabel value="Numero Movil:" for="numeroMovil" />
+							<h:inputText id="numeroMovil"
+								value="#{clienteBean.cliente.numeroMovil}"
+								styleClass="form-control" pt:placeholder="Enter Numero Movil">
+								<f:converter converterId="numeroMovil" />
+							</h:inputText>
+						</div>
 
-                    <h:outputLabel value="Numero Movil:" />
-                    <h:inputText value="#{clienteBean.cliente.numeroMovil}">
-                        <f:converter converterId="numeroMovil" />
-                    </h:inputText>
+						<div class="form-group">
+							<div class="custom-control custom-checkbox">
+								<h:selectBooleanCheckbox id="publicidad"
+									styleClass="custom-control-input"
+									value="#{clienteBean.cliente.publicidad}" />
+								<h:outputLabel value="Desea recibir publicidad?"
+									for="publicidad" styleClass="custom-control-label" />
+							</div>
+						</div>
 
-                    <h:outputLabel value="Desea recibir publicidad?" />
-                    <h:selectBooleanCheckbox value="#{clienteBean.cliente.publicidad}"  />
+						<div class="form-group">
+							<h:outputLabel value="Correo Electronico:" for="email" />
+							<h:inputText id="email" value="#{clienteBean.cliente.correo}"
+								styleClass="form-control" pt:type="email"
+								pt:placeholder="Enter Email" />
+						</div>
 
-                    <h:outputLabel value="Correo Electronico:" />
-                    <h:inputText value="#{clienteBean.cliente.correo}" />
+						<div class="form-group">
+							<h:outputLabel value="DNI:" for="numeroDocumento" />
+							<h:inputText value="#{clienteBean.cliente.numeroDocumento}"
+								id="numeroDocumento" label="DNI" styleClass="form-control"
+								pt:placeholder="Enter Email">
+								<f:validateRegex pattern="[0-9]{8}" />
+							</h:inputText>
+							<h:message for="numeroDocumento" />
+						</div>
 
-                    <h:outputLabel value="DNI:" />
-                    <h:panelGroup>
-                        <h:inputText value="#{clienteBean.cliente.numeroDocumento}" id="numeroDocumento" label="DNI">
-                            <f:validateRegex pattern="[0-9]{8}" />
-                        </h:inputText>
-                        <h:message for="numeroDocumento" />
-                    </h:panelGroup>                
+						<div class="form-group">
+							<h:outputLabel for="cantidadHijos" value="Cantidad Hijos:" />
+							<h:inputText value="#{clienteBean.cliente.cantidadHijos}"
+								id="cantidadHijos" label="Cantidad Hijos"
+								styleClass="form-control" pt:type="number" pt:min="0"
+								pt:placeholder="Enter Cantidad Hijos" />
+							<h:message for="cantidadHijos" />
+						</div>
 
-                    <h:outputLabel value="Cantidad Hijos:" />
-                    <h:panelGroup>
-                        <h:inputText value="#{clienteBean.cliente.cantidadHijos}" id="cantidadHijos" label="Cantidad Hijos" />
-                        <h:message for="cantidadHijos" />
-                    </h:panelGroup>                
-
-                    <h:outputLabel value="Fecha Nacimiento:" />
-                    <h:panelGroup>
-                        <h:inputText value="#{clienteBean.cliente.fechaNacimiento}" label="Fecha Nacimiento" id="fechaNacimiento" required="true">
-                            <f:convertDateTime pattern="dd/MM/yyyy" />
-                            <f:validator validatorId="fechaLimite" />
-                        </h:inputText>
-                        <h:message for="fechaNacimiento" showDetail="true" showSummary="false" />
-                    </h:panelGroup>
-
-                    <h:commandButton value="Registrar" action="#{clienteBean.registrar}" />
-                </h:panelGrid>
-            </h:form>   
-        </ui:define>
-    </ui:composition>    
+						<div class="form-group">
+							<h:outputLabel value="Fecha Nacimiento:" for="fechaNacimiento" />
+							<h:inputText value="#{clienteBean.cliente.fechaNacimiento}"
+								label="Fecha Nacimiento" id="fechaNacimiento" required="true"
+								styleClass="form-control" pt:type="date"
+								pt:placeholder="Enter Fecha Nacimiento">
+								<f:convertDateTime pattern="dd/MM/yyyy" />
+								<f:validator validatorId="fechaLimite" />
+							</h:inputText>
+							<h:message for="fechaNacimiento" showDetail="true"
+								showSummary="false" />
+						</div>
+						<div class="form-group">
+							<h:commandButton value="Registrar"
+								action="#{clienteBean.registrar}" styleClass="btn btn-primary" />
+						</div>
+					</h:form>
+				</div>
+			</div>
+		</ui:define>
+	</ui:composition>
 </f:view>
