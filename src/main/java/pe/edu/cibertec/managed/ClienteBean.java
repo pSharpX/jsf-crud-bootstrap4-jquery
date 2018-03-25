@@ -5,23 +5,68 @@
  */
 package pe.edu.cibertec.managed;
 
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.event.ValueChangeEvent;
+import javax.inject.Inject;
+import javax.inject.Named;
+import pe.edu.cibertec.dao.DaoCliente;
 import pe.edu.cibertec.model.Cliente;
 
 /**
  *
  * @author Java-LM
  */
+//@Named("clienteBean")
 @ManagedBean(name = "clienteBean")
 public class ClienteBean {
     
     private Cliente cliente = new Cliente();
     private String mensaje;
+    private List<Cliente> clientes;
     
-    public String registrar(){
-        return "resultado";
+    @Inject
+    @Named("mockDaoCliente")
+    private DaoCliente dao;
+    
+    @PostConstruct
+    public void init(){
     }
+    
+    public String principal(){
+        return "principal.xhtml";
+    }
+    
+    public String mostrar(){
+        return "pages/cliente/detalle";
+    }
+    
+    public String crear(){
+        return "nuevo.xhtml";
+    }    
+    
+    public String guardar(Cliente cliente){
+        return "resultado.xhtml";
+    }
+    
+    public String listar(){
+        clientes = dao.listarCliente();
+        return "pages/cliente/listar.xhtml";
+    }
+    
+    public String editar(){
+        return "pages/cliente/editar.xhtml";
+    }
+    
+    public String actualizar(Cliente cliente){
+        return "pages/cliente/editar.xhtml";
+    }
+    
+    public String eliminar(){
+        return "pages/cliente/eliminar.xhtml";
+    }
+    
     
     public void mensajeProfesion(ValueChangeEvent e){
         String valor = (String)e.getNewValue();
@@ -48,6 +93,20 @@ public class ClienteBean {
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
     }
-    
-    
+
+    public List<Cliente> getClientes() {
+        return clientes;
+    }
+
+    public void setClientes(List<Cliente> clientes) {
+        this.clientes = clientes;
+    }
+
+    public DaoCliente getDao() {
+        return dao;
+    }
+
+    public void setDao(DaoCliente dao) {
+        this.dao = dao;
+    }    
 }

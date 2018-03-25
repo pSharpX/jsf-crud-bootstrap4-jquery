@@ -7,6 +7,7 @@ package pe.edu.cibertec.managed;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -18,6 +19,7 @@ import javax.faces.context.FacesContext;
  */
 @ManagedBean(name = "login")
 @SessionScoped
+//@Model
 public class LoginBean {
     
     private String username;
@@ -52,7 +54,6 @@ public class LoginBean {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-    
+    } 
     
 }

@@ -6,59 +6,80 @@ and open the template in the editor.
 -->
 <!DOCTYPE html>
 <f:view xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core"
-	locale="#{facesContext.externalContext.requestLocale}"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
-	<div class="my-3 p-3 bg-white rounded box-shadow">
-		<h6 class="border-bottom border-gray pb-2 mb-0">
-			<h:outputText value="#{msjs.titulo_opciones}" />
-		</h6>
-		<div class="media text-muted pt-3">
-			<img data-src="holder.js/32x32?theme=thumb" alt=""
-				class="mr-2 rounded" />
-			<p
-				class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
-				<strong class="d-block text-gray-dark">@username</strong> Donec id
-				elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac
-				cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
-				justo sit amet risus.
-			</p>
-		</div>
-		<div class="media text-muted pt-3">
-			<h:form>
-				<h:panelGrid columns="1">
-					<h:commandLink action="nuevo">
-						<h:outputFormat value="#{msjs.enlace_nuevo}">
-							<f:param value="#{msjs.modulo_cliente}" />
-						</h:outputFormat>
-					</h:commandLink>
-
-					<h:commandLink value="Ver clientes Nuevos"
-						action="#{reporte.consultar()}"
-						actionListener="#{reporte.confirmarAccion}">
-						<f:attribute name="tipo" value="nuevo" />
-						<f:attribute name="titulo" value="Clientes Nuevos" />
-					</h:commandLink>
-
-					<h:commandLink value="Ver clientes Top"
-						action="#{reporte.consultar()}"
-						actionListener="#{reporte.confirmarAccion}">
-						<f:attribute name="tipo" value="top" />
-						<f:attribute name="titulo" value="Clientes Top" />
-					</h:commandLink>
-
-					<h:commandLink value="Ver todos los Clientes"
-						action="#{reporte.consultar()}"
-						actionListener="#{reporte.confirmarAccion}">
-						<f:attribute name="tipo" value="todos" />
-						<f:attribute name="titulo" value="Todos Los Clientes" />
-					</h:commandLink>
-				</h:panelGrid>
-			</h:form>
-		</div>
-		<small class="d-block text-right mt-3"> <a href="#">All
-				updates</a>
-		</small>
-	</div>
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        locale="#{facesContext.externalContext.requestLocale}"
+        xmlns:ui="http://java.sun.com/jsf/facelets">
+    <div class="my-3 p-3 bg-white rounded box-shadow">
+        <h6 class="border-bottom border-gray pb-2 mb-0">
+            <i class="fa fa-list mr-2"></i>
+            <h:outputText value="#{msjs.titulo_opciones}" />
+        </h6>
+        <h:form>
+            <div class="media text-muted pt-3">            
+                <i class="fa fa-plus-square fa-2x mr-2"></i>
+                <p
+                    class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">
+                        <h:commandLink action="#{clienteBean.crear()}">
+                            <h:outputFormat value="#{msjs.enlace_nuevo}">
+                                <f:param value="#{msjs.modulo_cliente}" />
+                            </h:outputFormat>
+                        </h:commandLink>
+                    </strong> Donec id
+                    elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac
+                    cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
+                    justo sit amet risus.
+                </p>
+            </div>
+            <div class="media text-muted pt-3">            
+                <i class="fa fa-folder fa-2x mr-2"></i>
+                <p
+                    class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">
+                        <h:commandLink value="Ver clientes Nuevos"
+                                       action="#{reporte.consultar()}"
+                                       actionListener="#{reporte.confirmarAccion}">
+                            <f:attribute name="tipo" value="nuevo" />
+                            <f:attribute name="titulo" value="Clientes Nuevos" />
+                        </h:commandLink>
+                    </strong> Donec id
+                    elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac
+                    cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
+                    justo sit amet risus.
+                </p>
+            </div>
+            <div class="media text-muted pt-3">            
+                <i class="fa fa-trophy fa-2x mr-2"></i>
+                <p
+                    class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">
+                        <h:commandLink value="Ver clientes Top"
+                                       action="#{reporte.consultar()}"
+                                       actionListener="#{reporte.confirmarAccion}">
+                            <f:attribute name="tipo" value="top" />
+                            <f:attribute name="titulo" value="Clientes Top" />
+                        </h:commandLink>
+                    </strong> Donec id
+                    elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac
+                    cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
+                    justo sit amet risus.
+                </p>
+            </div>
+            <div class="media text-muted pt-3">            
+                <i class="fa fa-list-ul fa-2x mr-2"></i>
+                <p
+                    class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                    <strong class="d-block text-gray-dark">
+                        <h:commandLink value="Ver todos los Clientes"
+                                       action="#{clienteBean.listar()}">
+                        </h:commandLink>
+                    </strong> Donec id
+                    elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac
+                    cursus commodo, tortor mauris condimentum nibh, ut fermentum massa
+                    justo sit amet risus.
+                </p>
+            </div>
+        </h:form>        
+    </div>
 </f:view>

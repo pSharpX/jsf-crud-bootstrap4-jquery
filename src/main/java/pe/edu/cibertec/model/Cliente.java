@@ -12,6 +12,7 @@ import java.util.Date;
  *
  * @author JAdv-LM
  */
+
 public class Cliente implements Serializable {
     private Integer codigo;
     private String nombre;

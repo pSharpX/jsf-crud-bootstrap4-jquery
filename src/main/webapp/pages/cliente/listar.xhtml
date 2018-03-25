@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<f:view xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:jsf="http://xmlns.jcp.org/jsf"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+        locale="#{facesContext.externalContext.requestLocale}"
+        xmlns:ui="http://java.sun.com/jsf/facelets">
+    <ui:composition template="/shared/layout.xhtml">
+        <ui:define name="breadcrumb">
+            <h:form>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <h:commandLink value="Principal" action="#{clienteBean.principal()}" />
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Lista</li>
+                    </ol>
+                </nav>
+            </h:form>            
+        </ui:define>
+        <ui:define name="body">
+            <div class="my-3 p-3 bg-white rounded box-shadow">
+                <h6 class="border-bottom border-gray pb-2 mb-0">
+                    <h:outputFormat value="#{msjs.enlace_nuevo}">
+                        <f:param value="#{msjs.modulo_cliente}" />
+                    </h:outputFormat>
+                </h6>
+                <div class="pt-3">
+                    <h:panelGroup layout="block" rendered="#{clienteBean.clientes == null or clienteBean.clientes.size() == 0}">
+                        <div class="alert alert-danger" role="alert">
+                            This is a danger alert—check it out!
+                        </div>
+                    </h:panelGroup>
+                    <h:form rendered="#{clienteBean.clientes != null and clienteBean.clientes.size() > 0}">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">Nombre</th>
+                                        <th scope="col">Apellido</th>
+                                        <th scope="col">DNI</th>                                        
+                                        <th scope="col">Genero</th>
+                                        <th scope="col">Correo</th>
+                                        <th class="text-center"><i class="fa fa-list"></i></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ui:repeat value="#{clienteBean.clientes}" var="cliente">
+                                        <tr>
+                                            <td scope="row">#{cliente.codigo}</td>
+                                            <td>#{cliente.nombre}</td>
+                                            <td>#{cliente.apellido}</td>
+                                            <td>#{cliente.numeroDocumento}</td>
+                                            <td>#{cliente.genero}</td>
+                                            <td>#{cliente.correo}</td>                                            
+                                            <td>
+                                                <a jsf:action="#{clienteBean.mostrar()}" class="btn btn-primary btn-sm mr-2" href="#" role="button">                                                    
+                                                    <i class="fa fa-info-circle"></i>
+                                                </a>
+                                                <a jsf:action="#{clienteBean.editar()}" class="btn btn-secondary btn-sm mr-2" href="#" role="button">                                                    
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                                <a jsf:action="#{clienteBean.eliminar()}" class="btn btn-danger btn-sm mr-2" href="#" role="button">                                                    
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </ui:repeat>
+                                </tbody>
+                            </table>
+                        </div>                        
+                    </h:form>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</f:view>
