@@ -5,13 +5,6 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
 <f:view xmlns="http://www.w3.org/1999/xhtml"
         xmlns:jsf="http://xmlns.jcp.org/jsf"
         xmlns:h="http://java.sun.com/jsf/html"
@@ -21,14 +14,16 @@ and open the template in the editor.
         xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:composition template="/shared/layout.xhtml">
         <ui:define name="breadcrumb">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <h:link value="Principal" outcome="principal" />
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Detalle</li>
-                </ol>
-            </nav>
+            <h:form>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <h:commandLink value="Principal" action="#{clienteBean.principal()}" />
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Detalle</li>
+                    </ol>
+                </nav>
+            </h:form>
         </ui:define>
         <ui:define name="body">
             <div class="my-3 p-3 bg-white rounded box-shadow">
@@ -37,7 +32,91 @@ and open the template in the editor.
                         <f:param value="#{msjs.modulo_cliente}" />
                     </h:outputFormat>
                 </h6>
-                <div class="pt-3">                    
+                <div class="pt-3">
+                    <h:panelGroup layout="block" rendered="#{clienteBean.cliente == null}">
+                        <div class="alert alert-danger" role="alert">
+                            This is a danger alert—check it out!
+                        </div>
+                    </h:panelGroup>
+                    <div class="form" jsf:rendered="#{clienteBean.cliente != null}">
+                        <div class="form-group">
+                            <h:outputLabel value="Nombre:" for="nombre" />
+                            <h:inputText value="#{clienteBean.cliente.nombre}"
+                                         styleClass="form-control" id="nombre" pt:readonly="true"
+                                         label="Nombre" />
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Apellido:" for="apellido" />
+                            <h:inputText value="#{clienteBean.cliente.apellido}"
+                                         styleClass="form-control" id="apellido"
+                                         label="Apellido" pt:readonly="true" />                            
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Genero:" for="genero" />
+                            <h:selectOneRadio id="genero"
+                                              value="#{clienteBean.cliente.genero}">
+                                <f:selectItems value="#{listados.generos}" />
+                            </h:selectOneRadio>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Profesion:" for="profesion" />
+                            <h:selectOneListbox id="profesion"
+                                                value="#{clienteBean.cliente.profesion}" size="1"
+                                                onchange="submit()" styleClass="custom-select"
+                                                valueChangeListener="#{clienteBean.mensajeProfesion}">
+                                <f:selectItems value="#{listados.profesiones}" />
+                            </h:selectOneListbox>
+                            <h:outputText value="#{clienteBean.mensaje}" />
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Numero Movil:" for="numeroMovil" />
+                            <h:inputText id="numeroMovil"
+                                         value="#{clienteBean.cliente.numeroMovil}"
+                                         styleClass="form-control" pt:readonly="true" />                            
+                        </div>
+
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <h:selectBooleanCheckbox id="publicidad"
+                                                         styleClass="custom-control-input"
+                                                         value="#{clienteBean.cliente.publicidad}" />
+                                <h:outputLabel value="Desea recibir publicidad?"
+                                               for="publicidad" styleClass="custom-control-label" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Correo Electronico:" for="email" />
+                            <h:inputText id="email" value="#{clienteBean.cliente.correo}"
+                                         styleClass="form-control" pt:type="email"
+                                         pt:readonly="true" />
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="DNI:" for="numeroDocumento" />
+                            <h:inputText value="#{clienteBean.cliente.numeroDocumento}"
+                                         id="numeroDocumento" label="DNI" styleClass="form-control"
+                                         pt:readonly="true" />                            
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel for="cantidadHijos" value="Cantidad Hijos:" />
+                            <h:inputText value="#{clienteBean.cliente.cantidadHijos}"
+                                         id="cantidadHijos" label="Cantidad Hijos"
+                                         styleClass="form-control" pt:readonly="true" />
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Fecha Nacimiento:" for="fechaNacimiento" />
+                            <h:inputText value="#{clienteBean.cliente.fechaNacimiento}"
+                                         label="Fecha Nacimiento" id="fechaNacimiento"                                          styleClass="form-control"
+                                         pt:readonly="true" />                            
+                        </div>
+                    </div>
                 </div>
             </div>
         </ui:define>

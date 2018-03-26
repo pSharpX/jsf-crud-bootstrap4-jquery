@@ -48,12 +48,14 @@ and open the template in the editor.
                                  styleClass="form-control" required="true"
                                  pt:placeholder="#{msjs.form_usuario}" pt:autofocus="autofocus" />
                     <h:outputLabel value="#{msjs.form_usuario}" for="inputUsername" />
+                    <h:message class="alert" errorClass="alert-danger" for="inputUsername" />
                 </div>
                 <div class="form-label-group">
                     <h:inputSecret id="inputPassword" value="#{login.password}"
                                    styleClass="form-control" pt:placeholder="#{msjs.form_contrasena}"
                                    required="true" />
                     <h:outputLabel value="#{msjs.form_contrasena}" for="inputPassword" />
+                    <h:message class="alert" errorClass="alert-danger" for="inputPassword" />
                 </div>
                 <div class="checkbox mb-3">
                     <div class="custom-control custom-checkbox">

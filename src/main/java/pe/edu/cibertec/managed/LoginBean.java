@@ -5,9 +5,7 @@
  */
 package pe.edu.cibertec.managed;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
-import javax.enterprise.inject.Model;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -29,7 +27,7 @@ public class LoginBean {
         ResourceBundle rb = ResourceBundle.getBundle("pe.edu.cibertec.recursos.mensajes", 
                 FacesContext.getCurrentInstance().getViewRoot().getLocale());
         if("Christian".equals(username) && "123456".equals(password))
-            return "principal";
+            return "home";
         
         password = null;
         FacesMessage fm = new FacesMessage(

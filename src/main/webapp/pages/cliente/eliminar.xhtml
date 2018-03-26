@@ -14,14 +14,16 @@ and open the template in the editor.
         xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:composition template="/shared/layout.xhtml">
         <ui:define name="breadcrumb">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <h:link value="Principal" outcome="principal" />
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Nuevo</li>
-                </ol>
-            </nav>
+            <h:form>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <h:commandLink value="Principal" action="#{clienteBean.principal()}" />
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Eliminar</li>
+                    </ol>
+                </nav>
+            </h:form>
         </ui:define>
         <ui:define name="body">
             <div class="my-3 p-3 bg-white rounded box-shadow">
@@ -31,7 +33,25 @@ and open the template in the editor.
                     </h:outputFormat>
                 </h6>
                 <div class="pt-3">
-                    <h:form></h:form>
+                    <h:panelGroup layout="block" rendered="#{clienteBean.cliente == null}">
+                        <div class="alert alert-danger" role="alert">
+                            This is a danger alert—check it out!
+                        </div>
+                    </h:panelGroup>
+                    <h:form rendered="#{clienteBean.cliente != null}">
+                        <div class="card mb-3 border-danger">
+                            <div class="card-header bg-transparent border-danger">Header</div>
+                            <div class="card-body text-danger">
+                                <h5 class="card-title">Danger card title</h5>
+                                <p class="card-text">#{clienteBean.cliente.apellido}, #{clienteBean.cliente.nombre} (#{clienteBean.cliente.numeroMovil})</p>
+                            </div>
+                        </div>
+                        <h:commandButton value="Eliminar"
+                                         action="#{clienteBean.eliminar(clienteBean.cliente.codigo)}" styleClass="d-none btn btn-danger" />
+                        <button type="submit" jsf:action="#{clienteBean.eliminar(clienteBean.cliente.codigo)}" jsf:process="@form" class="btn btn-danger mr-2">
+                            Eliminar<i class="fa fa-trash ml-2"></i>
+                        </button>
+                    </h:form>
                 </div>
             </div>
         </ui:define>

@@ -8,6 +8,7 @@ package pe.edu.cibertec.managed;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -20,6 +21,7 @@ import pe.edu.cibertec.model.Cliente;
  */
 //@Named("clienteBean")
 @ManagedBean(name = "clienteBean")
+@SessionScoped
 public class ClienteBean {
     
     private Cliente cliente = new Cliente();
@@ -35,45 +37,49 @@ public class ClienteBean {
     }
     
     public String principal(){
-        return "principal.xhtml";
+        return "home";
     }
     
-    public String mostrar(){
-        return "pages/cliente/detalle";
+    public String mostrar(Integer codigo){
+        cliente = dao.obtenerCliente(codigo);
+        return "customer_detail";
     }
     
     public String crear(){
-        return "nuevo.xhtml";
+        cliente = new Cliente();
+        return "customer_create";
     }    
     
     public String guardar(Cliente cliente){
-        return "resultado.xhtml";
+        return "result";
     }
     
     public String listar(){
         clientes = dao.listarCliente();
-        return "pages/cliente/listar.xhtml";
+        return "customer_list";
     }
     
-    public String editar(){
-        return "pages/cliente/editar.xhtml";
+    public String editar(Integer codigo ){
+        cliente = dao.obtenerCliente(codigo);
+        return "customer_edit";
     }
     
     public String actualizar(Cliente cliente){
-        return "pages/cliente/editar.xhtml";
+        return "result";
     }
     
-    public String eliminar(){
-        return "pages/cliente/eliminar.xhtml";
+    public String eliminar(Integer codigo){
+        cliente = dao.obtenerCliente(codigo);
+        return "customer_delete";
     }
     
     
     public void mensajeProfesion(ValueChangeEvent e){
         String valor = (String)e.getNewValue();
-        if(valor.equals("001")){
+        if("001".equals(valor)){
             setMensaje("Tenemos los mejores cursos de arquitectura");
         }
-        if(valor.equals("002")){
+        if("002".equals(valor)){
             setMensaje("Grandes eventos esperan por ti");
         }
     }

@@ -49,6 +49,7 @@ and open the template in the editor.
                                         <th scope="col">DNI</th>                                        
                                         <th scope="col">Genero</th>
                                         <th scope="col">Correo</th>
+                                        <th scope="col">Celular</th>
                                         <th class="text-center"><i class="fa fa-list"></i></th>
                                     </tr>
                                 </thead>
@@ -60,15 +61,16 @@ and open the template in the editor.
                                             <td>#{cliente.apellido}</td>
                                             <td>#{cliente.numeroDocumento}</td>
                                             <td>#{cliente.genero}</td>
-                                            <td>#{cliente.correo}</td>                                            
-                                            <td>
-                                                <a jsf:action="#{clienteBean.mostrar()}" class="btn btn-primary btn-sm mr-2" href="#" role="button">                                                    
+                                            <td>#{cliente.correo}</td>
+                                            <td>#{cliente.numeroMovil}</td>
+                                            <td>                                                
+                                                <a jsf:action="#{clienteBean.mostrar(cliente.codigo)}" class="btn btn-primary btn-sm mr-2" href="#" role="button">                                                    
                                                     <i class="fa fa-info-circle"></i>
                                                 </a>
-                                                <a jsf:action="#{clienteBean.editar()}" class="btn btn-secondary btn-sm mr-2" href="#" role="button">                                                    
+                                                <a jsf:action="#{clienteBean.editar(cliente.codigo)}" class="btn btn-secondary btn-sm mr-2" href="#" role="button">                                                    
                                                     <i class="fa fa-edit"></i>
                                                 </a>
-                                                <a jsf:action="#{clienteBean.eliminar()}" class="btn btn-danger btn-sm mr-2" href="#" role="button">                                                    
+                                                <a jsf:action="#{clienteBean.eliminar(cliente.codigo)}" class="btn btn-danger btn-sm mr-2" href="#" role="button">                                                    
                                                     <i class="fa fa-trash"></i>
                                                 </a>
                                             </td>
@@ -76,7 +78,7 @@ and open the template in the editor.
                                     </ui:repeat>
                                 </tbody>
                             </table>
-                        </div>                        
+                        </div>
                     </h:form>
                 </div>
             </div>

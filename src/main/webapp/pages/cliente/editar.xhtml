@@ -14,14 +14,16 @@ and open the template in the editor.
         xmlns:ui="http://java.sun.com/jsf/facelets">
     <ui:composition template="/shared/layout.xhtml">
         <ui:define name="breadcrumb">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <h:link value="Principal" outcome="principal" />
-                    </li>
-                    <li class="breadcrumb-item active" aria-current="page">Nuevo</li>
-                </ol>
-            </nav>
+            <h:form>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <h:commandLink value="Principal" action="#{clienteBean.principal()}" />
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Editar</li>
+                    </ol>
+                </nav>
+            </h:form>
         </ui:define>
         <ui:define name="body">
             <div class="my-3 p-3 bg-white rounded box-shadow">
@@ -31,7 +33,125 @@ and open the template in the editor.
                     </h:outputFormat>
                 </h6>
                 <div class="pt-3">
-                    <h:form></h:form>
+                    <h:panelGroup layout="block" rendered="#{clienteBean.cliente == null}">
+                        <div class="alert alert-danger" role="alert">
+                            This is a danger alert—check it out!
+                        </div>
+                    </h:panelGroup>
+                    <h:form rendered="#{clienteBean.cliente != null}">
+                        <div class="form-group">
+                            <h:outputLabel value="Nombre:" for="nombre" />
+                            <h:inputText value="#{clienteBean.cliente.nombre}"
+                                         styleClass="form-control" required="true" id="nombre"
+                                         label="Nombre" pt:placeholder="Enter Nombre"
+                                         pt:aria-describedby="nombreHelp" />
+                            <small id="nombreHelp" class="form-text text-muted">We'll
+                                never share your email with anyone else.</small>
+                            <h:message class="alert" errorClass="alert-danger" for="nombre" />
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Apellido:" for="apellido" />
+                            <h:inputText value="#{clienteBean.cliente.apellido}"
+                                         styleClass="form-control" required="true" id="apellido"
+                                         label="Apellido" pt:placeholder="Enter Apellido"
+                                         pt:aria-describedby="apellidoHelp">
+                                <f:validateLength maximum="20" />
+                            </h:inputText>
+                            <small id="apellidoHelp" class="form-text text-muted">We'll
+                                never share your email with anyone else.</small>
+                            <h:message for="apellido" />
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Genero:" for="genero" />
+                            <h:selectOneRadio id="genero"
+                                              value="#{clienteBean.cliente.genero}">
+                                <f:selectItems value="#{listados.generos}" />
+                            </h:selectOneRadio>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Profesion:" for="profesion" />
+                            <h:selectOneListbox id="profesion"
+                                                value="#{clienteBean.cliente.profesion}" size="1"
+                                                onchange="submit()" styleClass="custom-select"
+                                                valueChangeListener="#{clienteBean.mensajeProfesion}">
+                                <f:selectItems value="#{listados.profesiones}" />
+                            </h:selectOneListbox>
+                            <h:outputText value="#{clienteBean.mensaje}" />
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Numero Movil:" for="numeroMovil" />
+                            <h:inputText id="numeroMovil"
+                                         value="#{clienteBean.cliente.numeroMovil}"
+                                         styleClass="form-control" pt:placeholder="Enter Numero Movil">
+                                <f:converter converterId="numeroMovil" />
+                            </h:inputText>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox">
+                                <h:selectBooleanCheckbox id="publicidad"
+                                                         styleClass="custom-control-input"
+                                                         value="#{clienteBean.cliente.publicidad}" />
+                                <h:outputLabel value="Desea recibir publicidad?"
+                                               for="publicidad" styleClass="custom-control-label" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Correo Electronico:" for="email" />
+                            <h:inputText id="email" value="#{clienteBean.cliente.correo}"
+                                         styleClass="form-control" pt:type="email"
+                                         pt:placeholder="Enter Email" />
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="DNI:" for="numeroDocumento" />
+                            <h:inputText value="#{clienteBean.cliente.numeroDocumento}"
+                                         id="numeroDocumento" label="DNI" styleClass="form-control"
+                                         pt:placeholder="Enter Email">
+                                <f:validateRegex pattern="[0-9]{8}" />
+                            </h:inputText>
+                            <h:message for="numeroDocumento" />
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel for="cantidadHijos" value="Cantidad Hijos:" />
+                            <h:inputText value="#{clienteBean.cliente.cantidadHijos}"
+                                         id="cantidadHijos" label="Cantidad Hijos"
+                                         styleClass="form-control" pt:type="number" pt:min="0"
+                                         pt:placeholder="Enter Cantidad Hijos" />
+                            <h:message for="cantidadHijos" />
+                        </div>
+
+                        <div class="form-group">
+                            <h:outputLabel value="Fecha Nacimiento:" for="fechaNacimiento" />
+                            <h:inputText value="#{clienteBean.cliente.fechaNacimiento}"
+                                         label="Fecha Nacimiento" id="fechaNacimiento" required="true"
+                                         styleClass="form-control" pt:type="date"
+                                         pt:placeholder="Enter Fecha Nacimiento">
+                                <f:convertDateTime pattern="dd/MM/yyyy" />
+                                <f:validator validatorId="fechaLimite" />
+                            </h:inputText>
+                            <h:message for="fechaNacimiento" showDetail="true"
+                                       showSummary="false" />
+                        </div>
+                        <div class="form-group">
+                            <h:commandButton value="Guardar"
+                                             action="#{clienteBean.actualizar(clienteBean.cliente)}" styleClass="d-none btn btn-primary" />
+                            <h:commandButton value="Cancelar"
+                                             action="#{clienteBean.listar()}" styleClass="d-none btn btn-danger" />
+                            <button type="submit" jsf:action="#{clienteBean.actualizar(clienteBean.cliente)}" jsf:process="@form" class="btn btn-primary mr-2">
+                                Guardar<i class="fa fa-save ml-2"></i>
+                            </button>
+                            <button type="submit" jsf:action="#{clienteBean.listar()}" jsf:process="@form" class="btn btn-danger">
+                                Cancelar<i class="fa fa-undo ml-2"></i>
+                            </button>
+                        </div>
+                    </h:form>
                 </div>
             </div>
         </ui:define>
