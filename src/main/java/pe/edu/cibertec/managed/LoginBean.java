@@ -19,23 +19,43 @@ import javax.faces.context.FacesContext;
 @SessionScoped
 //@Model
 public class LoginBean {
-    
+
     private String username;
     private String password;
-    
-    public String autenticar(){
-        ResourceBundle rb = ResourceBundle.getBundle("pe.edu.cibertec.recursos.mensajes", 
+
+    public static final String HOME_PAGE_REDIRECT = "home";
+    public static final String LOGOUT_PAGE_REDIRECT = "login";
+
+    public String autenticar() {
+        ResourceBundle rb = ResourceBundle.getBundle("pe.edu.cibertec.recursos.mensajes",
                 FacesContext.getCurrentInstance().getViewRoot().getLocale());
-        if("Christian".equals(username) && "123456".equals(password))
-            return "home";
-        
+        if ("Christian".equalsIgnoreCase(username) && "123456".equalsIgnoreCase(password)) {
+            return HOME_PAGE_REDIRECT;
+        }
+
         password = null;
         FacesMessage fm = new FacesMessage(
-                FacesMessage.SEVERITY_ERROR, 
-                rb.getString("validacion_login_incorrecto"), 
+                FacesMessage.SEVERITY_ERROR,
+                rb.getString("validacion_login_incorrecto"),
                 rb.getString("validacion_login_incorrecto_detail"));
         FacesContext.getCurrentInstance().addMessage(null, fm);
-        return null;        
+        return null;
+    }
+
+    public String logout() {
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return LOGOUT_PAGE_REDIRECT;
+    }
+
+    public boolean isLoggedIn() {
+        return username != null;
+    }
+
+    public String isLoggedInForwardHome() {
+        if (isLoggedIn()) {
+            return HOME_PAGE_REDIRECT;
+        }
+        return null;
     }
 
     public String getUsername() {
@@ -52,6 +72,6 @@ public class LoginBean {
 
     public void setPassword(String password) {
         this.password = password;
-    } 
-    
+    }
+
 }
