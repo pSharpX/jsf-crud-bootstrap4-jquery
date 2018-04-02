@@ -25,15 +25,21 @@ public class LanguageBean implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String localeCode;
+    private String currentLocaleCode;
     private static final Map<String, Object> countries;
 
     static {
         countries = new LinkedHashMap<>();
         countries.put("English", Locale.ENGLISH);
-        countries.put("Spanish", new Locale("es", "ES"));
+        countries.put("Spanish", new Locale("es"));        
     }
+        
 
-    public Map<String, Object> getCountriesInMap() {
+    public LanguageBean() {		
+		this.localeCode = this.getCurrentLocaleCode();
+	}
+
+	public Map<String, Object> getCountriesInMap() {
         return countries;
     }
 
@@ -55,4 +61,13 @@ public class LanguageBean implements Serializable {
             }
         }
     }
+    
+    public String getCurrentLocaleCode() {
+    	return FacesContext.getCurrentInstance().getViewRoot().getLocale().getLanguage();
+    }
+
+	public void setCurrentLocaleCode(String currentLocaleCode) {
+		this.currentLocaleCode = currentLocaleCode;
+	}    
+    
 }

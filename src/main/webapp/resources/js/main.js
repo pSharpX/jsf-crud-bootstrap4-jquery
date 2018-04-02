@@ -4,9 +4,20 @@
  * and open the template in the editor.
  */
 
-$(function () {
-  'use strict';
-  $('[data-toggle="offcanvas"]').on('click', function () {
-    $('.offcanvas-collapse').toggleClass('open');
-  });
+$(function() {
+	'use strict';
+	var localeCode = $('#localeCode').val();
+	var selectedLocaleCode = $('.selectedLocaleCode').val();
+		
+	$('[data-toggle="offcanvas"]').on('click', function() {
+		$('.offcanvas-collapse').toggleClass('open');
+	});
+
+	$('.datepicker').datepicker({
+		language: selectedLocaleCode,
+		todayHighlight: true,
+		format : 'dd/mm/yyyy',
+		endDate : '0d'
+	});
+	
 });

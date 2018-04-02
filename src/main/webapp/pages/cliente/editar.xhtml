@@ -129,8 +129,8 @@ and open the template in the editor.
                             <h:outputLabel value="#{msjsCliente['formulario.fechaNacimiento']}:" for="fechaNacimiento" />
                             <h:inputText value="#{clienteBean.cliente.fechaNacimiento}"
                                          id="fechaNacimiento" pt:required="true"
-                                         styleClass="form-control #{clienteBean.fechaNacimientoInputValid ? 'is-valid': 'is-invalid'}"
-                                         pt:type="date"
+                                         styleClass="form-control datepicker #{clienteBean.fechaNacimientoInputValid ? 'is-valid': 'is-invalid'}"
+                                         pt:type="text"
                                          pt:placeholder="#{msjsCliente['formulario.fechaNacimiento.placeholder']}">
                                 <f:convertDateTime pattern="dd/MM/yyyy" />
                                 <f:validator validatorId="fechaLimite" />

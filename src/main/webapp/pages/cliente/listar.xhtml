@@ -30,7 +30,7 @@ and open the template in the editor.
                 <h6 class="border-bottom border-gray pb-2 mb-0"><i class="fa fa-database mr-2"></i>#{msjs['operacion.listado']}</h6>
                 <div class="pt-3">
                     <h:panelGroup layout="block" rendered="#{clienteBean.clientes == null or clienteBean.clientes.size() == 0}">
-                        <div class="alert alert-danger" role="alert">#{msjsCliente['formulario.listar.message']}}</div>
+                        <div class="alert alert-danger" role="alert">#{msjsCliente['formulario.listar.message']}</div>
                     </h:panelGroup>
                     <h:form rendered="#{clienteBean.clientes != null and clienteBean.clientes.size() > 0}">
                         <div class="table-responsive">
