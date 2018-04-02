@@ -16,13 +16,13 @@ and open the template in the editor.
         <ui:define name="breadcrumb">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item active" aria-current="page">Principal</li>                    
+                    <li class="breadcrumb-item active" aria-current="page">#{msjs['operacion.principal']}</li>                    
                 </ol>
             </nav>
         </ui:define>
         <ui:define name="body">
             <div class="my-3 p-3 bg-white rounded box-shadow">
-                <h6 class="border-bottom border-gray pb-2 mb-0">Principal</h6>
+                <h6 class="border-bottom border-gray pb-2 mb-0"><i class="fa fa-home mr-2"></i>#{msjs['operacion.principal']}</h6>
                 <h:form class="text-muted pt-3">
                     <div class="jumbotron jumbotron-fluid">
                         <div class="container">
@@ -34,14 +34,9 @@ and open the template in the editor.
                             <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
                             <hr class="my-4" />
                             <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-                            <p class="lead">
-                                <!--<h:commandLink action="nuevo" styleClass="btn btn-primary btn-lg" pt:role="button">
-                                    <h:outputFormat value="#{msjs.enlace_nuevo}">
-                                        <f:param value="#{msjs.modulo_cliente}" />
-                                    </h:outputFormat>
-                                </h:commandLink>-->
+                            <p class="lead">                                
                                 <a jsf:action="#{clienteBean.crear()}" class="btn btn-primary btn-lg" href="#" role="button">
-                                    <h:outputFormat value="#{msjs.enlace_nuevo}">
+                                    <h:outputFormat value="#{msjs['enlace.nuevo']}">
                                         <f:param value="#{msjs.modulo_cliente}" />
                                     </h:outputFormat>
                                     <i class="fa fa-plus-square ml-2"></i>

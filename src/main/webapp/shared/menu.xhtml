@@ -12,7 +12,7 @@ and open the template in the editor.
         xmlns:ui="http://java.sun.com/jsf/facelets">
     <div class="my-3 p-3 bg-white rounded box-shadow">
         <h6 class="border-bottom border-gray pb-2 mb-0">
-            <i class="fa fa-list mr-2"></i>
+            <i class="fa fa-bars mr-2"></i>
             <h:outputText value="#{msjs.titulo_opciones}" />
         </h6>
         <h:form>
@@ -22,7 +22,7 @@ and open the template in the editor.
                     class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                     <strong class="d-block text-gray-dark">
                         <h:commandLink action="#{clienteBean.crear()}">
-                            <h:outputFormat value="#{msjs.enlace_nuevo}">
+                            <h:outputFormat value="#{msjs['enlace.nuevo']}">
                                 <f:param value="#{msjs.modulo_cliente}" />
                             </h:outputFormat>
                         </h:commandLink>
@@ -37,9 +37,11 @@ and open the template in the editor.
                 <p
                     class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                     <strong class="d-block text-gray-dark">
-                        <h:commandLink value="Ver clientes Nuevos"
-                                       action="#{reporte.consultar()}"
+                        <h:commandLink action="#{reporte.consultar()}"
                                        actionListener="#{reporte.confirmarAccion}">
+                            <h:outputFormat value="#{msjs['enlace.listar.nuevos']}">
+                                <f:param value="#{msjs['modulo.cliente.plural']}" />
+                            </h:outputFormat>
                             <f:attribute name="tipo" value="nuevo" />
                             <f:attribute name="titulo" value="Clientes Nuevos" />
                         </h:commandLink>
@@ -54,9 +56,11 @@ and open the template in the editor.
                 <p
                     class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                     <strong class="d-block text-gray-dark">
-                        <h:commandLink value="Ver clientes Top"
-                                       action="#{reporte.consultar()}"
+                        <h:commandLink action="#{reporte.consultar()}"
                                        actionListener="#{reporte.confirmarAccion}">
+                            <h:outputFormat value="#{msjs['enlace.listar.tops']}">
+                                <f:param value="#{msjs['modulo.cliente.plural']}" />
+                            </h:outputFormat>
                             <f:attribute name="tipo" value="top" />
                             <f:attribute name="titulo" value="Clientes Top" />
                         </h:commandLink>
@@ -67,12 +71,14 @@ and open the template in the editor.
                 </p>
             </div>
             <div class="media text-muted pt-3">            
-                <i class="fa fa-list-ul fa-2x mr-2"></i>
+                <i class="fa fa-database fa-2x mr-2"></i>
                 <p
                     class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                     <strong class="d-block text-gray-dark">
-                        <h:commandLink value="Ver todos los Clientes"
-                                       action="#{clienteBean.listar()}">
+                        <h:commandLink action="#{clienteBean.listar()}">
+                            <h:outputFormat value="#{msjs['enlace.listar']}">
+                                <f:param value="#{msjs['modulo.cliente.plural']}" />
+                            </h:outputFormat>
                         </h:commandLink>
                     </strong> Donec id
                     elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac

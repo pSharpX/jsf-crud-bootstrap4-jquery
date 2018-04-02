@@ -7,11 +7,9 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
-        <title>JSF Main Page</title>
+        <title><h:outputText value="#{msjs['pagina.cabecera']} - #{msjs['pagina.titulo']}" /></title>
         <meta charset="utf-8" />
         <meta name="viewport"
               content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -30,6 +28,8 @@ and open the template in the editor.
         <h:outputScript library="webjars"
                         name="bootstrap/4.0.0-2/js/bootstrap.min.js" />
         <h:outputScript name="/js/holder.min.js" />
+        <h:outputScript name="/js/validate.js" />
+        <h:outputScript name="/js/main.js" />
     </h:head>
     <h:body styleClass="bg-light">
         <div id="header">

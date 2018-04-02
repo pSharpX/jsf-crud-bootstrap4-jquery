@@ -15,10 +15,20 @@ import java.sql.SQLException;
 
 public class SqlConecta {
 
+    private final String host;
+    private final String port;
+    private final String url;
     private final String db;
+    private final String username;
+    private final String password;
 
     public SqlConecta() {
-        db = "trabajofinal";
+        this.host = "localhost";
+        this.port = "3306";
+        this.db = "trabajofinal";
+        this.url = String.format("jdbc:mysql://%s:%s/%s", this.host, this.port, this.db);        
+        this.username = "root";
+        this.password = "123456";
     }
 
     public Connection connection() {
@@ -26,8 +36,7 @@ public class SqlConecta {
 
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            cn = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/" + db, "root", "123456");
+            cn = DriverManager.getConnection(this.url, this.username, this.password);
             
         } catch (SQLException sqle) {
           sqle.printStackTrace();

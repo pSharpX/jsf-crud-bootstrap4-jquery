@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 
 /**
@@ -73,5 +74,17 @@ public class LoginBean {
     public void setPassword(String password) {
         this.password = password;
     }
+    
+    public boolean isUserNameInputValid (){
+      FacesContext context = FacesContext.getCurrentInstance();      
+      UIInput input = (UIInput)context.getViewRoot().findComponent("login:inputUsername");
+      return input.isValid();
+   }
+    
+    public boolean isPasswordInputValid (){
+      FacesContext context = FacesContext.getCurrentInstance();      
+      UIInput input = (UIInput)context.getViewRoot().findComponent("login:inputPassword");
+      return input.isValid();
+   }
 
 }
