@@ -1,0 +1,1 @@
+web: java -jar target/laboratorio3_3-1.0-SNAPSHOT.war
