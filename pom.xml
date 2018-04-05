@@ -3,12 +3,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.mycompany</groupId>
-	<artifactId>laboratorio3_3</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<groupId>pe.edu.cibertec</groupId>
+	<artifactId>jsfcrudapplication</artifactId>
+	<version>1.0.0</version>
 	<packaging>war</packaging>
 
-	<name>laboratorio3_3</name>
+	<name>jsfcrudapplication</name>
 
 	<properties>
 		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
@@ -121,6 +121,11 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.heroku.sdk</groupId>
+				<artifactId>heroku-maven-plugin</artifactId>
+				<version>2.0.3</version>
 			</plugin>
 		</plugins>
 	</build>

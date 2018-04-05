@@ -1,1 +1,1 @@
-web: java -jar target/laboratorio3_3-1.0-SNAPSHOT.war
+web: java -jar target/jsfcrudapplication-1.0.0.war
