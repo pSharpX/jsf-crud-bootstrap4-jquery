@@ -41,7 +41,7 @@ public class ClienteBean {
 	private List<Cliente> clientes;
 
 	@Inject
-	@Named("mysqlDaoCliente")
+	@Named("mockDaoCliente")
 	private DaoCliente dao;
 
 	@PostConstruct
