@@ -5,12 +5,16 @@
  */
 package pe.edu.cibertec.managed;
 
+import pe.edu.cibertec.service.IUsuarioService;
+
 import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
@@ -23,6 +27,10 @@ public class LoginBean {
 
     private String username;
     private String password;
+
+    @Inject
+    @Named("usuarioService")
+    private IUsuarioService usuarioService;
 
     public static final String HOME_PAGE_REDIRECT = "home";
     public static final String LOGOUT_PAGE_REDIRECT = "login";
