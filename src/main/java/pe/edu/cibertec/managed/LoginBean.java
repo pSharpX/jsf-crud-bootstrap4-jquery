@@ -22,7 +22,6 @@ import javax.inject.Named;
  */
 @ManagedBean(name = "login")
 @SessionScoped
-//@Model
 public class LoginBean {
 
     private String username;
@@ -36,19 +35,28 @@ public class LoginBean {
     public static final String LOGOUT_PAGE_REDIRECT = "login";
 
     public String autenticar() {
-        ResourceBundle rb = ResourceBundle.getBundle("pe.edu.cibertec.recursos.mensajes",
-                FacesContext.getCurrentInstance().getViewRoot().getLocale());
-        if ("Christian".equalsIgnoreCase(username) && "123456".equalsIgnoreCase(password)) {
-            return HOME_PAGE_REDIRECT;
-        }
+        try{
+            ResourceBundle rb = ResourceBundle.getBundle("pe.edu.cibertec.recursos.mensajes",
+                    FacesContext.getCurrentInstance().getViewRoot().getLocale());
+            if (usuarioService.existe(username, password)) {
+                return HOME_PAGE_REDIRECT;
+            }
 
-        password = null;
-        FacesMessage fm = new FacesMessage(
-                FacesMessage.SEVERITY_ERROR,
-                rb.getString("validacion_login_incorrecto"),
-                rb.getString("validacion_login_incorrecto_detail"));
-        FacesContext.getCurrentInstance().addMessage(null, fm);
-        return null;
+            password = null;
+            FacesMessage fm = new FacesMessage(
+                    FacesMessage.SEVERITY_ERROR,
+                    rb.getString("validacion_login_incorrecto"),
+                    rb.getString("validacion_login_incorrecto_detail"));
+            FacesContext.getCurrentInstance().addMessage(null, fm);
+            return null;
+        }catch (Exception ex){
+            FacesMessage fm = new FacesMessage(
+                    FacesMessage.SEVERITY_ERROR,
+                    ex.getMessage(),
+                    ex.getMessage());
+            FacesContext.getCurrentInstance().addMessage(null, fm);
+            return null;
+        }
     }
 
     public String logout() {
@@ -95,4 +103,11 @@ public class LoginBean {
       return input.isValid();
    }
 
+    public IUsuarioService getUsuarioService() {
+        return usuarioService;
+    }
+
+    public void setUsuarioService(IUsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
 }

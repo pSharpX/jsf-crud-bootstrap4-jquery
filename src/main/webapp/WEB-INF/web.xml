@@ -23,6 +23,10 @@
 		<exception-type>java.lang.Exception</exception-type>
 		<location>/faces/error/serverError.xhtml</location>
 	</error-page>
+	<listener>
+		<description>ServletContextListener</description>
+		<listener-class>pe.edu.cibertec.listener.ApplicationListener</listener-class>
+	</listener>
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>

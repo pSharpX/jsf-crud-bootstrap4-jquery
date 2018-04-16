@@ -1,6 +1,7 @@
 package pe.edu.cibertec.util;
 
 import org.modelmapper.ModelMapper;
+import pe.edu.cibertec.producer.ModelMapperProducer;
 
 import javax.enterprise.inject.Produces;
 
@@ -10,6 +11,7 @@ import javax.enterprise.inject.Produces;
 public class ModelMapperFactory {
 
     @Produces
+    @ModelMapperProducer
     public ModelMapper createModelMapper(){
         return new ModelMapper();
     }

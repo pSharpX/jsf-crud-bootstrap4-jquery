@@ -56,13 +56,10 @@ and open the template in the editor.
                 <p
                     class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
                     <strong class="d-block text-gray-dark">
-                        <h:commandLink action="#{reporte.consultar()}"
-                                       actionListener="#{reporte.confirmarAccion}">
+                        <h:commandLink action="#{productoBean.listar()}">
                             <h:outputFormat value="#{msjs['enlace.listar.tops']}">
-                                <f:param value="#{msjs['modulo.cliente.plural']}" />
+                                <f:param value="Productos" />
                             </h:outputFormat>
-                            <f:attribute name="tipo" value="top" />
-                            <f:attribute name="titulo" value="Clientes Top" />
                         </h:commandLink>
                     </strong> Donec id
                     elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac
