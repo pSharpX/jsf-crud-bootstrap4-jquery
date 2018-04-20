@@ -31,7 +31,7 @@ public class ApplicationListener implements ServletContextListener {
     }
 
     private EntityManagerFactory getEntityManagerFactory(){
-        return Persistence.createEntityManagerFactory( "labjpa" );
+        return Persistence.createEntityManagerFactory( "labtest" );
     }
 
     private ModelMapper getModelMapper(){

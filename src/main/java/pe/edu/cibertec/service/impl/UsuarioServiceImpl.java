@@ -8,7 +8,7 @@ import pe.edu.cibertec.producer.ModelMapperProducer;
 import pe.edu.cibertec.producer.UsuarioRepositorioProducer;
 import pe.edu.cibertec.repositorio.UsuarioRepositorio;
 import pe.edu.cibertec.repositorio.impl.UsuarioJpaRepositorioImpl;
-import pe.edu.cibertec.service.IUsuarioService;
+import pe.edu.cibertec.service.UsuarioService;
 
 import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
@@ -22,7 +22,7 @@ import javax.persistence.NoResultException;
  * Created by CHRISTIAN on 13/04/2018.
  */
 @Named("usuarioService")
-public class UsuarioService implements IUsuarioService {
+public class UsuarioServiceImpl implements UsuarioService {
 
     @Inject
     @ModelMapperProducer
@@ -36,7 +36,7 @@ public class UsuarioService implements IUsuarioService {
     @PersistenceContext(unitName = "labjpa")
     private EntityManager entityManager;*/
 
-    public UsuarioService(){
+    public UsuarioServiceImpl(){
     }
 
     @PostConstruct
