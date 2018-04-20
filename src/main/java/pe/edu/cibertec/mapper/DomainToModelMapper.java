@@ -1,5 +1,6 @@
 package pe.edu.cibertec.mapper;
 
+import org.modelmapper.Condition;
 import org.modelmapper.PropertyMap;
 import pe.edu.cibertec.dominio.Producto;
 import pe.edu.cibertec.dominio.Usuario;
@@ -14,6 +15,8 @@ public class DomainToModelMapper {
     private PropertyMap<Producto, ProductoModel> fromProductoToProductoModelMap;
     private PropertyMap<Usuario, UsuarioModel> fromUsuarioToUsuarioModelMap;
 
+    private Condition<Producto, ProductoModel> notNull = context -> context.getSource().getCategoria() != null;
+
     public DomainToModelMapper(){
         this.fromProductoToProductoModelMap = new PropertyMap<Producto, ProductoModel>() {
             @Override
@@ -23,7 +26,8 @@ public class DomainToModelMapper {
                 this.map().setDescripcion(source.getDescripcion());
                 this.map().setImagen(source.getImagen());
                 this.map().setPrecio(source.getPrecio().doubleValue());
-                this.map().setCategoria(source.getCategoria().getNombre());
+                when(notNull).map().setCategoria(source.getCategoria().getNombre());
+                when(notNull).map().setIdCategoria(source.getCategoria().getId());
             }
         };
         this.fromUsuarioToUsuarioModelMap = new PropertyMap<Usuario, UsuarioModel>() {

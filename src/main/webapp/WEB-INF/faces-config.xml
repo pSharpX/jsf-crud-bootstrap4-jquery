@@ -75,6 +75,12 @@
     </navigation-rule>
     <navigation-rule>
         <navigation-case>
+            <from-outcome>product_create</from-outcome>
+            <to-view-id>/pages/producto/nuevo.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
             <from-outcome>product_list</from-outcome>
             <to-view-id>/pages/producto/listar.xhtml</to-view-id>
         </navigation-case>
@@ -83,6 +89,12 @@
         <navigation-case>
             <from-outcome>product_detail</from-outcome>
             <to-view-id>/pages/producto/detalle.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>product_edit</from-outcome>
+            <to-view-id>/pages/producto/editar.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

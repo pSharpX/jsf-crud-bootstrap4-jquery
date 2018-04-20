@@ -5,7 +5,7 @@
  */
 package pe.edu.cibertec.managed;
 
-import pe.edu.cibertec.service.IUsuarioService;
+import pe.edu.cibertec.service.UsuarioService;
 
 import java.util.ResourceBundle;
 import javax.faces.application.FacesMessage;
@@ -29,7 +29,7 @@ public class LoginBean {
 
     @Inject
     @Named("usuarioService")
-    private IUsuarioService usuarioService;
+    private UsuarioService usuarioService;
 
     public static final String HOME_PAGE_REDIRECT = "home";
     public static final String LOGOUT_PAGE_REDIRECT = "login";
@@ -103,11 +103,11 @@ public class LoginBean {
       return input.isValid();
    }
 
-    public IUsuarioService getUsuarioService() {
+    public UsuarioService getUsuarioService() {
         return usuarioService;
     }
 
-    public void setUsuarioService(IUsuarioService usuarioService) {
+    public void setUsuarioService(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
 }

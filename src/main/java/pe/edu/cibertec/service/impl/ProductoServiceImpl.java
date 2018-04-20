@@ -44,20 +44,13 @@ public class ProductoService implements IProductoService {
 
     @PostConstruct
     public void init(){
-        //this.productoRepositorio.setEntityManager(this.entityManager);
         this.mapper.addMappings(new ProductoModelToProductoMap());
         this.mapper.addMappings(new ProductoToProductoModelMap());
     }
 
     @Override
     public Collection<ProductoModel> listar() {
-        EntityManagerFactory emf = (EntityManagerFactory) FacesContext.getCurrentInstance().getExternalContext()
-                .getApplicationMap().get("emf");
-        EntityManager em = emf.createEntityManager();
-
-        ProductoRepositorio productoRepositorio = new ProductoJpaRepositorioImpl()
-                .setEntityManager(em);
-        List<Producto> _productos = productoRepositorio.obtenerTodos();
+        List<Producto> _productos = this.productoRepositorio.obtenerTodos();
         List<ProductoModel> _productoModels;
         if(_productos == null && _productos.size() == 0)
             return null;
@@ -70,12 +63,35 @@ public class ProductoService implements IProductoService {
 
     @Override
     public Collection<ProductoModel> listarPorCategoria(Long idCategoria) {
-        return null;
+        List<Producto> _productos = this.productoRepositorio.obtenerPorCategoriaCriteriaApi(idCategoria);
+        List<ProductoModel> _productoModels;
+        if(_productos == null && _productos.size() == 0)
+            return null;
+        _productoModels = new ArrayList<>();
+        for (Producto p: _productos) {
+            _productoModels.add(this.mapper.map(p, ProductoModel.class));
+        }
+        return _productoModels;
     }
 
     @Override
     public ProductoModel obtener(Long id) {
         return null;
+    }
+
+    @Override
+    public ProductoModel crear(ProductoModel producto) {
+        return null;
+    }
+
+    @Override
+    public ProductoModel actualizar(ProductoModel producto) {
+        return null;
+    }
+
+    @Override
+    public boolean eliminar(ProductoModel producto) {
+        return false;
     }
 
     public ModelMapper getMapper() {

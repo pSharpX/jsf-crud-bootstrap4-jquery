@@ -1,6 +1,9 @@
 package pe.edu.cibertec.mapper;
 
+import org.modelmapper.Converter;
 import org.modelmapper.PropertyMap;
+import org.modelmapper.spi.MappingContext;
+import pe.edu.cibertec.dominio.Categoria;
 import pe.edu.cibertec.dominio.Producto;
 import pe.edu.cibertec.dominio.Usuario;
 import pe.edu.cibertec.model.ProductoModel;
@@ -16,6 +19,13 @@ public class ModelToDomainMapper {
     private PropertyMap<ProductoModel, Producto> fromProductoModelToProductoMap;
     private PropertyMap<UsuarioModel, Usuario> fromUsuarioModelToUsuarioMap;
 
+    private Converter<ProductoModel, Categoria> toCategoria = context -> {
+        Categoria categoria = new Categoria();
+        categoria.setId(context.getSource().getIdCategoria());
+        categoria.setNombre(context.getSource().getCategoria());
+        return categoria;
+    };
+
     public ModelToDomainMapper(){
         this.fromProductoModelToProductoMap = new PropertyMap<ProductoModel, Producto>() {
             @Override
@@ -25,7 +35,8 @@ public class ModelToDomainMapper {
                 this.map().setDescripcion(source.getDescripcion());
                 this.map().setImagen(source.getImagen());
                 this.map().setPrecio(new BigDecimal(source.getPrecio()));
-                this.skip().setCategoria(null);
+                using(toCategoria).map(source).setCategoria(null);
+                //this.map().setCategoria(createCategoria(source.getIdCategoria(), source.getCategoria()));
             }
         };
         this.fromUsuarioModelToUsuarioMap = new PropertyMap<UsuarioModel, Usuario>() {
@@ -37,6 +48,13 @@ public class ModelToDomainMapper {
                 this.skip().setFechaNacimiento(null);
             }
         };
+    }
+
+    private Categoria createCategoria(Long id, String nombre){
+        Categoria categoria = new Categoria();
+        categoria.setId(id);
+        categoria.setNombre(nombre);
+        return categoria;
     }
 
     public PropertyMap<ProductoModel, Producto> getFromProductoModelToProductoMap() {

@@ -41,27 +41,18 @@ public class UsuarioService implements IUsuarioService {
 
     @PostConstruct
     public void init(){
-        //this.usuarioRepositorio.setEntityManager(this.entityManager);
         this.mapper.addMappings(new UsuarioModelToUsuarioMap());
         this.mapper.addMappings(new UsuarioToUsuarioModelMap());
     }
 
     @Override
     public boolean existe(String username, String password) {
-        EntityManagerFactory emf = (EntityManagerFactory) FacesContext.getCurrentInstance().getExternalContext()
-                .getApplicationMap().get("emf");
-        EntityManager em = emf.createEntityManager();
         try {
-            UsuarioRepositorio usuarioRepositorio = new UsuarioJpaRepositorioImpl()
-                    .setEntityManager(em);
-            Usuario usuario = usuarioRepositorio.buscar(username, password);
-            em.close();
+            Usuario usuario = this.usuarioRepositorio.buscar(username, password);
             if(usuario == null)
                 return false;
             return true;
         }catch (NoResultException ex){
-            if(em != null && em.isOpen())
-                em.close();
             return false;
         }
     }

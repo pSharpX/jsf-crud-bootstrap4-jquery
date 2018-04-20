@@ -10,6 +10,7 @@ public class ProductoModel {
     private double precio;
     private byte[] imagen;
     private String categoria;
+    private Long idCategoria;
 
     public ProductoModel() {
     }
@@ -60,5 +61,13 @@ public class ProductoModel {
 
     public void setCategoria(String categoria) {
         this.categoria = categoria;
+    }
+
+    public Long getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(Long idCategoria) {
+        this.idCategoria = idCategoria;
     }
 }

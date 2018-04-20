@@ -5,11 +5,18 @@
  */
 package pe.edu.cibertec.managed;
 
+import pe.edu.cibertec.service.CategoriaService;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.model.SelectItem;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  *
@@ -21,6 +28,16 @@ public class ListadoBean {
     
     private List<SelectItem> generos;
     private List<SelectItem> profesiones;
+    private Collection<SelectItem> categorias;
+
+    @Inject
+    @Named("categoriaService")
+    private CategoriaService categoriaService;
+
+    @PostConstruct
+    public void init() {
+        categorias = this.categoriaService.combo();
+    }
 
     public ListadoBean() {
         generos = new ArrayList<>();
@@ -47,6 +64,20 @@ public class ListadoBean {
     public void setProfesiones(List<SelectItem> profesiones) {
         this.profesiones = profesiones;
     }
-    
-    
+
+    public Collection<SelectItem> getCategorias() {
+        return categorias;
+    }
+
+    public void setCategorias(Collection<SelectItem> categorias) {
+        this.categorias = categorias;
+    }
+
+    public CategoriaService getCategoriaService() {
+        return categoriaService;
+    }
+
+    public void setCategoriaService(CategoriaService categoriaService) {
+        this.categoriaService = categoriaService;
+    }
 }
