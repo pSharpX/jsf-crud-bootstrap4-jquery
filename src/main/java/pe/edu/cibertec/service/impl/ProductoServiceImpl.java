@@ -8,14 +8,10 @@ import pe.edu.cibertec.model.ProductoModel;
 import pe.edu.cibertec.producer.ModelMapperProducer;
 import pe.edu.cibertec.producer.ProductoRepositorioProducer;
 import pe.edu.cibertec.repositorio.ProductoRepositorio;
-import pe.edu.cibertec.repositorio.impl.ProductoJpaRepositorioImpl;
 import pe.edu.cibertec.service.ProductoService;
 import javax.annotation.PostConstruct;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -38,7 +34,7 @@ public class ProductoServiceImpl implements ProductoService {
     @PersistenceContext(unitName = "labjpa")
     private EntityManager entityManager;*/
 
-    public  ProductoServiceImpl(){
+    public ProductoServiceImpl(){
     }
 
     @PostConstruct

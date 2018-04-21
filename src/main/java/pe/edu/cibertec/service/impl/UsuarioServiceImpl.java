@@ -7,15 +7,11 @@ import pe.edu.cibertec.mapper.modelToDomain.UsuarioModelToUsuarioMap;
 import pe.edu.cibertec.producer.ModelMapperProducer;
 import pe.edu.cibertec.producer.UsuarioRepositorioProducer;
 import pe.edu.cibertec.repositorio.UsuarioRepositorio;
-import pe.edu.cibertec.repositorio.impl.UsuarioJpaRepositorioImpl;
 import pe.edu.cibertec.service.UsuarioService;
 
 import javax.annotation.PostConstruct;
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 
 /**
