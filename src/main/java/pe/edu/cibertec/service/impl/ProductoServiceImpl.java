@@ -1,6 +1,7 @@
 package pe.edu.cibertec.service.impl;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import pe.edu.cibertec.dominio.Producto;
 import pe.edu.cibertec.mapper.domainToModel.ProductoToProductoModelMap;
 import pe.edu.cibertec.mapper.modelToDomain.ProductoModelToProductoMap;
@@ -12,6 +13,7 @@ import pe.edu.cibertec.service.ProductoService;
 import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -41,31 +43,26 @@ public class ProductoServiceImpl implements ProductoService {
     public void init(){
         this.mapper.addMappings(new ProductoModelToProductoMap());
         this.mapper.addMappings(new ProductoToProductoModelMap());
+        this.mapper.validate();
     }
 
     @Override
     public Collection<ProductoModel> listar() {
         List<Producto> _productos = this.productoRepositorio.obtenerTodos();
-        List<ProductoModel> _productoModels;
-        if(_productos == null && _productos.size() == 0)
+        if(_productos == null || _productos.size() == 0)
             return null;
-        _productoModels = new ArrayList<>();
-        for (Producto p: _productos) {
-            _productoModels.add(this.mapper.map(p, ProductoModel.class));
-        }
+        Type type = new TypeToken<List<ProductoModel>>(){}.getType();
+        List<ProductoModel> _productoModels = this.mapper.map(_productos, type);
         return _productoModels;
     }
 
     @Override
     public Collection<ProductoModel> listarPorCategoria(Long idCategoria) {
         List<Producto> _productos = this.productoRepositorio.obtenerPorCategoriaCriteriaApi(idCategoria);
-        List<ProductoModel> _productoModels;
-        if(_productos == null && _productos.size() == 0)
+        if(_productos == null || _productos.size() == 0)
             return null;
-        _productoModels = new ArrayList<>();
-        for (Producto p: _productos) {
-            _productoModels.add(this.mapper.map(p, ProductoModel.class));
-        }
+        Type type = new TypeToken<List<ProductoModel>>(){}.getType();
+        List<ProductoModel> _productoModels = this.mapper.map(_productos, type);
         return _productoModels;
     }
 

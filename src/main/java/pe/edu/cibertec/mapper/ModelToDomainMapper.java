@@ -36,7 +36,6 @@ public class ModelToDomainMapper {
                 this.map().setImagen(source.getImagen());
                 this.map().setPrecio(new BigDecimal(source.getPrecio()));
                 using(toCategoria).map(source).setCategoria(null);
-                //this.map().setCategoria(createCategoria(source.getIdCategoria(), source.getCategoria()));
             }
         };
         this.fromUsuarioModelToUsuarioMap = new PropertyMap<UsuarioModel, Usuario>() {
@@ -48,13 +47,6 @@ public class ModelToDomainMapper {
                 this.skip().setFechaNacimiento(null);
             }
         };
-    }
-
-    private Categoria createCategoria(Long id, String nombre){
-        Categoria categoria = new Categoria();
-        categoria.setId(id);
-        categoria.setNombre(nombre);
-        return categoria;
     }
 
     public PropertyMap<ProductoModel, Producto> getFromProductoModelToProductoMap() {

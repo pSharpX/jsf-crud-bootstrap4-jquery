@@ -5,6 +5,7 @@
  */
 package pe.edu.cibertec.managed;
 
+import pe.edu.cibertec.model.CategoriaModel;
 import pe.edu.cibertec.service.CategoriaService;
 
 import java.util.ArrayList;
@@ -36,7 +37,15 @@ public class ListadoBean {
 
     @PostConstruct
     public void init() {
-        categorias = this.categoriaService.combo();
+        Collection<CategoriaModel> categoriaModels = this.categoriaService.listar();
+        if(categoriaModels != null && categoriaModels.size() > 0){
+            categorias = categoriaModels.stream().map((categoriaModel) -> {
+                SelectItem selectItem = new SelectItem();
+                selectItem.setValue(categoriaModel.getId());
+                selectItem.setLabel(categoriaModel.getNombre());
+                return  selectItem;
+            }).collect(Collectors.toList());
+        }
     }
 
     public ListadoBean() {

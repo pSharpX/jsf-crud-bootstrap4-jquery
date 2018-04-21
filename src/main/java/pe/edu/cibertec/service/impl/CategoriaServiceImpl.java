@@ -3,6 +3,7 @@ package pe.edu.cibertec.service.impl;
 import org.modelmapper.Condition;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
+import org.modelmapper.TypeToken;
 import org.modelmapper.spi.MappingContext;
 import pe.edu.cibertec.dominio.Categoria;
 import pe.edu.cibertec.mapper.domainToModel.CategoriaToCategoriaModelMap;
@@ -19,6 +20,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -48,8 +50,9 @@ public class CategoriaServiceImpl implements CategoriaService {
     public void init(){
         this.mapper.addMappings(new CategoriaModelToCategoriaMap());
         this.mapper.addMappings(new CategoriaToCategoriaModelMap());
-        this.mapper.addMappings(new SelectItemToCategoriaMap());
-        this.mapper.addMappings(new CategoriaToSelectItemMap());
+        //this.mapper.addMappings(new SelectItemToCategoriaMap());
+        //this.mapper.addMappings(new CategoriaToSelectItemMap());
+        this.mapper.validate();
     }
 
     @Override
@@ -57,10 +60,8 @@ public class CategoriaServiceImpl implements CategoriaService {
         List<Categoria> _categorias = this.categoriaRepositorio.obtenerTodos();
         if(_categorias == null || _categorias.size() == 0)
             return null;
-        List<CategoriaModel> _categoriaModels = new ArrayList<>();
-        for (Categoria p: _categorias) {
-            _categoriaModels.add(this.mapper.map(p, CategoriaModel.class));
-        }
+        Type type = new TypeToken<List<CategoriaModel>>(){}.getType();
+        List<CategoriaModel> _categoriaModels = this.mapper.map(_categorias, type);
         return _categoriaModels;
     }
 
@@ -75,10 +76,8 @@ public class CategoriaServiceImpl implements CategoriaService {
         List<Categoria> _categorias = this.categoriaRepositorio.obtenerTodos();
         if(_categorias == null || _categorias.size() == 0)
             return null;
-        List<SelectItem> items = new ArrayList<>();
-        for (Categoria c: _categorias) {
-            items.add(this.mapper.map(c, SelectItem.class));
-        }
+        Type type = new TypeToken<List<SelectItem>>(){}.getType();
+        List<SelectItem> items = this.mapper.map(_categorias, type);
         return  items;
     }
 }

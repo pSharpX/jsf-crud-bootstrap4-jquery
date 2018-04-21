@@ -28,13 +28,5 @@ public class ProductoModelToProductoMap extends PropertyMap<ProductoModel, Produ
         this.map().setImagen(source.getImagen());
         this.map().setPrecio(new BigDecimal(source.getPrecio()));
         using(toCategoria).map(source).setCategoria(null);
-        //this.map().setCategoria(createCategoria(source.getId(), source.getNombre()));
-    }
-
-    private Categoria createCategoria(Long id, String nombre){
-        Categoria categoria = new Categoria();
-        categoria.setId(id);
-        categoria.setNombre(nombre);
-        return categoria;
     }
 }
