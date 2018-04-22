@@ -19,5 +19,12 @@ $(function() {
 		format : 'dd/mm/yyyy',
 		endDate : '0d'
 	});
+
+    $("input[type='file']").fileinput({
+        language: selectedLocaleCode,
+        theme: "fa",
+        showUpload: false,
+        allowedFileExtensions: ["jpg", "png", "gif"]
+    });
 	
 });

@@ -4,8 +4,10 @@ import pe.edu.cibertec.model.ProductoModel;
 import pe.edu.cibertec.service.ProductoService;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -17,7 +19,7 @@ import java.util.Collection;
  * Created by CHRISTIAN on 15/04/2018.
  */
 @ManagedBean(name = "productoBean")
-@RequestScoped
+@SessionScoped
 public class ProductoBean {
 
     private ProductoModel producto = new ProductoModel();
@@ -62,18 +64,30 @@ public class ProductoBean {
 
     public String guardar(ProductoModel producto){
         try{
-
+            producto = this.productoService.crear(producto);
+            return "product_list";
         }catch (Exception ex){
+            FacesMessage fm = new FacesMessage(
+                    FacesMessage.SEVERITY_ERROR,
+                    ex.getMessage(),
+                    ex.getMessage());
+            FacesContext.getCurrentInstance().addMessage(null, fm);
+            return null;
         }
-        return "product_list";
     }
 
     public String editar(Long codigo){
         try{
             producto = this.productoService.obtener(codigo);
+            return "product_edit";
         }catch (Exception ex){
+            FacesMessage fm = new FacesMessage(
+                    FacesMessage.SEVERITY_ERROR,
+                    ex.getMessage(),
+                    ex.getMessage());
+            FacesContext.getCurrentInstance().addMessage(null, fm);
+            return null;
         }
-        return "product_edit";
     }
 
     public String actualizar(ProductoModel producto){
@@ -85,9 +99,15 @@ public class ProductoBean {
             if (producto != null) {
                 throw new Exception("not found");
             }
+            return "product_list";
         }catch (Exception ex){
+            FacesMessage fm = new FacesMessage(
+                    FacesMessage.SEVERITY_ERROR,
+                    ex.getMessage(),
+                    ex.getMessage());
+            FacesContext.getCurrentInstance().addMessage(null, fm);
+            return null;
         }
-        return "product_list";
     }
 
     public ProductoService getProductoService() {
@@ -148,4 +168,5 @@ public class ProductoBean {
         }
         return request;
     }
+
 }

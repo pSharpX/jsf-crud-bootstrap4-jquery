@@ -4,7 +4,6 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<!DOCTYPE html>
 <f:view xmlns="http://www.w3.org/1999/xhtml"
         xmlns:jsf="http://xmlns.jcp.org/jsf"
         xmlns:h="http://java.sun.com/jsf/html"
@@ -36,12 +35,23 @@ and open the template in the editor.
                         <div class="card-columns">
                             <ui:repeat value="#{productoBean.productos}" var="producto">
                                 <div class="card">
-                                    <img class="card-img-top" src="/images/logoCibertec.jpg" alt="Card image cap" />
+                                    <h:graphicImage url="/resources/images/logoCibertec.jpg" styleClass="card-img-top" alt="Card image cap" />
                                     <div class="card-body">
                                         <h5 class="card-title">#{producto.nombre}</h5>
                                         <p class="card-text">#{producto.descripcion}</p>
-                                        <a jsf:action="#{productoBean.mostrar(producto.id)}" class="btn btn-info btn-sm mr-2" href="#" role="button">
+                                        <p class="card-text">#{producto.precio}</p>
+                                        <p class="card-text">#{producto.categoria}</p>
+                                        <h:commandLink value="#{msjsCliente['formulario.boton']}"
+                                                         action="#{productoBean.mostrar(producto.id)}"
+                                                         styleClass="d-none btn btn-primary" />
+                                        <h:commandLink value="#{msjsCliente['formulario.boton']}"
+                                                       action="#{productoBean.editar(producto.id)}"
+                                                       styleClass="d-none btn btn-primary" />
+                                        <a jsf:action="#{productoBean.mostrar(producto.id)}" class="btn btn-primary btn-sm mr-2" href="#" role="button">
                                             <i class="fa fa-angle-double-left"></i>
+                                        </a>
+                                        <a jsf:action="#{productoBean.editar(producto.id)}" class="btn btn-warning btn-sm mr-2" href="#" role="button">
+                                            <i class="fa fa-shopping-cart"></i>
                                         </a>
                                     </div>
                                 </div>

@@ -75,6 +75,13 @@
 			<version>1.7.1</version>
 		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.webjars.bowergithub.kartik-v/bootstrap-fileinput -->
+		<dependency>
+			<groupId>org.webjars.bowergithub.kartik-v</groupId>
+			<artifactId>bootstrap-fileinput</artifactId>
+			<version>4.4.8</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
 		<dependency>
 			<groupId>com.h2database</groupId>
