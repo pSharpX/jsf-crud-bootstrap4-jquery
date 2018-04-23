@@ -97,4 +97,16 @@
             <to-view-id>/pages/producto/editar.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>cart_add</from-outcome>
+            <to-view-id>/pages/carrito/agregar.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <navigation-case>
+            <from-outcome>cart_list</from-outcome>
+            <to-view-id>/pages/carrito/carrito.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

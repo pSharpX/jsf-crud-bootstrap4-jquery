@@ -2,15 +2,24 @@ package pe.edu.cibertec.managed;
 
 import pe.edu.cibertec.model.CarritoModel;
 import pe.edu.cibertec.model.DetalleCarritoModel;
+import pe.edu.cibertec.model.ProductoModel;
 import pe.edu.cibertec.service.CarritoService;
 import pe.edu.cibertec.service.DetalleCarritoService;
+import pe.edu.cibertec.service.ProductoService;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.component.UIInput;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.function.ToDoubleFunction;
 
 /**
  * Created by CHRISTIAN on 15/04/2018.
@@ -21,8 +30,8 @@ public class CarritoBean {
 
     private String mensaje;
     private CarritoModel carritoModel = new CarritoModel();
-    private Collection<CarritoModel> carritoModels;
-    private Collection<DetalleCarritoModel> detalleCarritoModels;
+    private DetalleCarritoModel detalleCarritoModel = new DetalleCarritoModel();
+    private List<DetalleCarritoModel> detalleCarritoModels;
 
     @Inject
     @Named("carritoService")
@@ -32,12 +41,68 @@ public class CarritoBean {
     @Named("detalleCarritoService")
     private DetalleCarritoService detalleCarritoService;
 
+    /*@Inject
+    @Named("productoService")*/
+    @EJB(name = "productoService")
+    private ProductoService productoService;
+
     @PostConstruct
     public void init() {
+        this.carritoModel.setUsuario(this.getUsuario());
+        detalleCarritoModels = new ArrayList<>();
     }
 
     public String listar(){
-        return "";
+        try{
+            if(detalleCarritoModels != null && detalleCarritoModels.size() > 0){
+                this.carritoModel.setDetalleCarrito(this.detalleCarritoModels);
+                ToDoubleFunction<DetalleCarritoModel> calcSubTotal = d -> d.getPrecioUnitario() * d.getCantidad();
+                this.carritoModel.setTotal(this.carritoModel.getDetalleCarrito().stream().mapToDouble(calcSubTotal).sum());
+            }
+            return "cart_list";
+        }catch (Exception ex){
+            FacesMessage fm = new FacesMessage(
+                    FacesMessage.SEVERITY_ERROR,
+                    ex.getMessage(),
+                    ex.getMessage());
+            FacesContext.getCurrentInstance().addMessage(null, fm);
+            return null;
+        }
+    }
+
+    public String seleccionarItem(Long idProducto){
+        try{
+            ProductoModel productoModel = this.productoService.obtener(idProducto);
+            if(productoModel == null)
+                throw new Exception("Product not found");
+            detalleCarritoModel.setIdProducto(productoModel.getId());
+            detalleCarritoModel.setProducto(productoModel.getNombre());
+            detalleCarritoModel.setCantidad(1);
+            detalleCarritoModel.setPrecioUnitario(productoModel.getPrecio());
+            return "cart_add";
+        }catch (Exception ex){
+            FacesMessage fm = new FacesMessage(
+                    FacesMessage.SEVERITY_ERROR,
+                    ex.getMessage(),
+                    ex.getMessage());
+            FacesContext.getCurrentInstance().addMessage(null, fm);
+            return null;
+        }
+    }
+
+    public String agregarItem(DetalleCarritoModel detalleCarritoModel){
+        try {
+            this.detalleCarritoModels.add(detalleCarritoModel);
+            this.detalleCarritoModel = new DetalleCarritoModel();
+            return "product_list";
+        }catch (Exception ex){
+            FacesMessage fm = new FacesMessage(
+                    FacesMessage.SEVERITY_ERROR,
+                    ex.getMessage(),
+                    ex.getMessage());
+            FacesContext.getCurrentInstance().addMessage(null, fm);
+            return null;
+        }
     }
 
     public String getMensaje() {
@@ -56,19 +121,11 @@ public class CarritoBean {
         this.carritoModel = carritoModel;
     }
 
-    public Collection<CarritoModel> getCarritoModels() {
-        return carritoModels;
-    }
-
-    public void setCarritoModels(Collection<CarritoModel> carritoModels) {
-        this.carritoModels = carritoModels;
-    }
-
-    public Collection<DetalleCarritoModel> getDetalleCarritoModels() {
+    public List<DetalleCarritoModel> getDetalleCarritoModels() {
         return detalleCarritoModels;
     }
 
-    public void setDetalleCarritoModels(Collection<DetalleCarritoModel> detalleCarritoModels) {
+    public void setDetalleCarritoModels(List<DetalleCarritoModel> detalleCarritoModels) {
         this.detalleCarritoModels = detalleCarritoModels;
     }
 
@@ -87,4 +144,43 @@ public class CarritoBean {
     public void setDetalleCarritoService(DetalleCarritoService detalleCarritoService) {
         this.detalleCarritoService = detalleCarritoService;
     }
+
+    public DetalleCarritoModel getDetalleCarritoModel() {
+        return detalleCarritoModel;
+    }
+
+    public void setDetalleCarritoModel(DetalleCarritoModel detalleCarritoModel) {
+        this.detalleCarritoModel = detalleCarritoModel;
+    }
+
+    public ProductoService getProductoService() {
+        return productoService;
+    }
+
+    public void setProductoService(ProductoService productoService) {
+        this.productoService = productoService;
+    }
+
+    private String getUsuario(){
+        Map<String, Object> session = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        Object object = session.get("login");
+        if(object == null)
+            return null;
+        LoginBean loginBean = (LoginBean)object;
+        return  loginBean.getUsername();
+    }
+
+    public boolean isCantidadInputValid() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        UIInput input = (UIInput) context.getViewRoot().findComponent("cart_form:cantidad");
+        return input.isValid();
+    }
+
+    public boolean isPrecioInputValid() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        UIInput input = (UIInput) context.getViewRoot().findComponent("cart_form:precio");
+        return input.isValid();
+    }
+
+
 }

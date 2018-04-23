@@ -12,6 +12,7 @@ import pe.edu.cibertec.producer.ProductoRepositorioProducer;
 import pe.edu.cibertec.repositorio.ProductoRepositorio;
 import pe.edu.cibertec.service.ProductoService;
 import javax.annotation.PostConstruct;
+import javax.ejb.*;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.lang.reflect.Type;
@@ -26,7 +27,10 @@ import java.util.stream.Collectors;
 /**
  * Created by CHRISTIAN on 14/04/2018.
  */
-@Named("productoService")
+//@Named("productoService")
+@Stateless(name = "productoService")
+@TransactionManagement(TransactionManagementType.CONTAINER)
+//@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class ProductoServiceImpl implements ProductoService {
 
     @Inject
@@ -36,10 +40,6 @@ public class ProductoServiceImpl implements ProductoService {
     @Inject
     @ProductoRepositorioProducer
     private ProductoRepositorio productoRepositorio;
-
-    /*@Inject
-    @PersistenceContext(unitName = "labjpa")
-    private EntityManager entityManager;*/
 
     public ProductoServiceImpl(){
     }

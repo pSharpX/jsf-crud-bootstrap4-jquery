@@ -32,6 +32,7 @@ and open the template in the editor.
                         <div class="alert alert-danger" role="alert">#{msjsCliente['mensaje.cliente.error']}</div>
                     </h:panelGroup>
                     <h:form id="customer_form" rendered="#{productoBean.producto != null}" class="needs-validation" pt:novalidate="true">
+                        <h:messages globalOnly="true" styleClass="d-block" errorClass="alert alert-danger" warnClass="alert alert-warning" infoClass="alert alert-info" />
                         <div class="form-group">
                             <h:outputLabel value="Nombre:"
                                            for="nombre" />

@@ -4,9 +4,9 @@ import pe.edu.cibertec.model.ProductoModel;
 import pe.edu.cibertec.service.ProductoService;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
@@ -26,8 +26,9 @@ public class ProductoBean {
     private String mensaje;
     private Collection<ProductoModel> productos;
 
-    @Inject
-    @Named("productoService")
+    /*@Inject
+    @Named("productoService")*/
+    @EJB(name = "productoService")
     private ProductoService productoService;
 
     @PostConstruct
