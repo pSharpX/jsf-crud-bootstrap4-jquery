@@ -89,12 +89,12 @@ and open the template in the editor.
                                     <td class="text-right"><h3><strong>$#{carritoBean.carritoModel.total}</strong></h3></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4"></td>
-                                    <td>
+                                    <td colspan="3"></td>
+                                    <td colspan="2">
                                         <a jsf:action="#{productoBean.listar()}" jsf:immediate="true" jsf:process="@none" class="btn btn-primary" href="#" role="button">
                                             Seguir comprando<i class="fa fa-shopping-cart ml-2"></i>
                                         </a>
-                                        <a jsf:action="#{carritoBean.checkout()}" jsf:immediate="true" jsf:process="@none" class="btn btn-primary" href="#" role="button">
+                                        <a jsf:action="#{carritoBean.checkout()}" jsf:immediate="true" jsf:process="@none" class="btn btn-success" href="#" role="button">
                                             Comprar<i class="fa fa-play"></i>
                                         </a>
                                     </td>
