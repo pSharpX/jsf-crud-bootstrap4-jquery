@@ -19,6 +19,8 @@ import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.function.ToDoubleFunction;
 
 /**
@@ -90,9 +92,35 @@ public class CarritoBean {
         }
     }
 
+    public String checkout(){
+        try{
+            return "cart_checkout";
+        }catch (Exception ex){
+            FacesMessage fm = new FacesMessage(
+                    FacesMessage.SEVERITY_ERROR,
+                    ex.getMessage(),
+                    ex.getMessage());
+            FacesContext.getCurrentInstance().addMessage(null, fm);
+            return null;
+        }
+    }
+
+    public String save(){
+        try{
+            return "product_list";
+        }catch (Exception ex){
+            FacesMessage fm = new FacesMessage(
+                    FacesMessage.SEVERITY_ERROR,
+                    ex.getMessage(),
+                    ex.getMessage());
+            FacesContext.getCurrentInstance().addMessage(null, fm);
+            return null;
+        }
+    }
+
     public String agregarItem(DetalleCarritoModel detalleCarritoModel){
         try {
-            this.detalleCarritoModels.add(detalleCarritoModel);
+            addItemToShoppingCart(detalleCarritoModel);
             this.detalleCarritoModel = new DetalleCarritoModel();
             return "product_list";
         }catch (Exception ex){
@@ -102,6 +130,20 @@ public class CarritoBean {
                     ex.getMessage());
             FacesContext.getCurrentInstance().addMessage(null, fm);
             return null;
+        }
+    }
+
+    private void addItemToShoppingCart(DetalleCarritoModel detalleCarritoModel){
+        Predicate<DetalleCarritoModel> predicate = (d) -> d.getIdProducto() == detalleCarritoModel.getIdProducto();
+        if(this.detalleCarritoModels.stream().anyMatch(predicate)){
+            Consumer<DetalleCarritoModel> consumer = (DetalleCarritoModel d) -> {
+                if(d.getIdProducto() == detalleCarritoModel.getIdProducto()){
+                    d.setCantidad(d.getCantidad() + detalleCarritoModel.getCantidad());
+                }
+            };
+            this.detalleCarritoModels.forEach(consumer);
+        }else{
+            this.detalleCarritoModels.add(detalleCarritoModel);
         }
     }
 
